@@ -1,0 +1,19 @@
+# Compiled
+*.pyc
+
+# Image file
+*.png
+*.jpg
+*.bmp
+
+# log and debug file
+*.log
+log.txt
+*.debug.txt
+debug/
+
+# Bot Configuration
+config.json
+
+# PyCharm project
+.idea/
