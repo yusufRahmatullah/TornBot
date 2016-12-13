@@ -54,19 +54,69 @@ class Torn:
     def _get_profile_info(self):
         self._debug('[info] call get profile info')
         self.b.get(Url.gym)
-        self.energy = Util.get_pair_int(self.b.find_element_by_xpath(Xpath.Profile.energy).text)
-        self.nerve = Util.get_pair_int(self.b.find_element_by_xpath(Xpath.Profile.nerve).text)
-        self.happy = Util.get_pair_int(self.b.find_element_by_xpath(Xpath.Profile.happy).text)
-        self.life = Util.get_pair_int(self.b.find_element_by_xpath(Xpath.Profile.life).text)
+        _temp = self.b.find_elements_by_xpath(Xpath.Profile.energy)
+        if len(_temp) > 0:
+                self.energy = Util.get_pair_int(_temp[0].text)
+        else:
+                self.energy = (-1, 100)
+        _temp = self.b.find_elements_by_xpath(Xpath.Profile.nerve)
+        
+        if len(_temp) > 0:
+                self.nerve = Util.get_pair_int(_temp[0].text)
+        else:
+                self.nerve = (-1, 100)
+        _temp = self.b.find_elements_by_xpath(Xpath.Profile.happy)
+        
+        if len(_temp) > 0:
+                self.happy = Util.get_pair_int(_temp[0].text)
+        else:
+                self.happy = (-1, 100)
+        
+        _temp = self.b.find_elements_by_xpath(Xpath.Profile.life)
+        if len(_temp) > 0:
+                self.life = Util.get_pair_int(_temp[0].text)
+        else:
+                self.life = (-1,100)
+        
+        _temp = self.b.find_elements_by_xpath(Xpath.Gym.Data.strength)
+        if len(_temp) > 0:
+                self.strength = float(_temp[0].text)
+        else:
+                self.strength = -1.0
+        
+        _temp = self.b.find_elements_by_xpath(Xpath.Gym.Data.defense)
+        if len(_temp) > 0:
+                self.defense = float(_temp[0].text)
+        else:
+                self.defense = -1.0
+        
+        _temp = self.b.find_elements_by_xpath(Xpath.Gym.Data.speed)
+        if len(_temp) > 0:
+                self.speed = float(_temp[0].text)
+        else:
+                self.speed - -1.0
+        
+        _temp = self.b.find_elements_by_xpath(Xpath.Gym.Data.dexterity)
+        if len(_temp) > 0:
+                self.dexterity = float(_temp[0].text)
+        else:
+                self.dexterity = -1.0
 
-        self.strength = float(self.b.find_element_by_xpath(Xpath.Gym.Data.strength).text)
-        self.defense = float(self.b.find_element_by_xpath(Xpath.Gym.Data.dexterity).text)
-        self.speed = float(self.b.find_element_by_xpath(Xpath.Gym.Data.strength).text)
-        self.dexterity = float(self.b.find_element_by_xpath(Xpath.Gym.Data.dexterity).text)
+        _temp = self.b.find_elements_by_class_name('info-money')
+        if len(_temp) > 0:
+                self.money = Util.get_single_int(_temp[0].text)
+        else:
+                self.money = -1
+                
+        _temp = self.b.find_elements_by_class_name('info-level')
+        if len(_temp) > 0:
+                self.level = Util.get_single_int(_temp[0].text)
+        else:
+                self.level = -1
 
-        self.money = Util.get_single_int(self.b.find_element_by_class_name('info-money').text)
-        self.level = Util.get_single_int(self.b.find_element_by_class_name('info-level').text)
-
+        if self.energy[0] == -1 or self.nerve[0] == -1 or self.happy[0] == -1:
+                self.timer = 0
+                return
         energy_diff = self.energy[1] - self.energy[0]
         self._debug('[info] energy diff: {}'.format(energy_diff))
         energy_timer = energy_diff/5 * 15 * 60    # wait n x 15 minutes
