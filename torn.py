@@ -147,6 +147,7 @@ class Torn:
             self._print_profile_info()
             self._gym()
             self._crime()
+            self._print_profile_info()
             self._debug('[run] sleep for {} seconds'.format(self.timer))
             time.sleep(self.timer)
 
