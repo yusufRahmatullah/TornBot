@@ -136,10 +136,13 @@ class Torn:
         nerve_timer = nerve_diff * 5 * 60   # wait n x 5 minutes
         self._debug('[info] nerve timer: {}'.format(nerve_timer))
 
-        happy_diff = self.happy[1] - self.happy[0]
-        self._debug('[info] happy diff: {}'.format(happy_diff))
-        happy_timer = happy_diff/5 * 15 * 60
-        self._debug('[info] happy timer: {}'.format(happy_timer))
+        if self.happy[0] < 10:
+            happy_diff = self.happy[1] - self.happy[0]
+            self._debug('[info] happy diff: {}'.format(happy_diff))
+            happy_timer = happy_diff/5 * 15 * 60
+            self._debug('[info] happy timer: {}'.format(happy_timer))
+        else:
+            happy_timer = 100 * 15 * 60
 
         self.timer = min(energy_timer, nerve_timer, happy_timer)
 
