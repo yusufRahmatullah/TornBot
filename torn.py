@@ -28,6 +28,15 @@ class Torn:
         self.b.get(Url.crime)
         if Checker.isLevelUp(self.b.page_source):
             self.b.get(Url.crime)
+        if Checker.isBotDetected(self.b.page_source):
+            _temp = self.b.find_elements_by_xpath(Xpath.Captcha.image_tab)
+            if len(_temp) > 0:
+                _temp[0].click()
+            _time = time.gmtime()
+            _time_str = 'bot_{}-{}-{}_{}-{}-{}.png'.format(_time.tm_year, _time.tm_mon,
+            _time.tm_mday, _time.tm_hour, _time.tm_min, _time.tm_sec)
+            self.b.save_screenshot(_time_str)
+            return
         uls = self.b.find_elements_by_tag_name('ul')
         # max_crime_idx must in range 20-36
         # cost is start from 2 for idx 20 and 18 for idx 36

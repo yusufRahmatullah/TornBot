@@ -10,7 +10,10 @@ class Checker:
     @staticmethod
     def isLevelUp(page_source):
         return 'Level Up' in page_source
-
+        
+    @staticmethod
+    def isBotDetected(page_source):
+        return 'captcha' in page_source
 
 class Url:
     def __init__(self):
@@ -47,6 +50,11 @@ class Xpath:
     def __init__(self):
         pass
 
+    class Captcha:
+        def __init__(self):
+            pass
+        image_tab = "//div[@id='tabmenu']/ul[1]/li[3]"
+    
     class Crime:
         def __init__(self):
             pass
